@@ -12,16 +12,44 @@ public class Criador : MonoBehaviour
     
     public float TempoRestante = 60f;
 
-    public void chocaPokemon()
+    private int limite = 10;
+
+    public pokemon[] pokemons;
+
+    private int quantidade = 5;
+
+    public Text PontosVisor;
+
+    private int PontosJogador = 0;
+
+
+    public void AumentaPontos()
     {
-        int quantidade = 3;
-        for(int i = 0; i < quantidade ; i++)
-        {
-            Vector3 pokemonPosicao = new Vector3(Random.Range(-7f, 7f), Random.Range(-4f, 4f), 0f);
-            Instantiate(pokemon, pokemonPosicao, Quaternion.identity);
-        }
+        PontosJogador++;
+        PontosVisor.text = "Pontos: " + PontosJogador;
+
     }
 
+    public void chocaPokemon()
+    {
+        pokemons = FindObjectsOfType<pokemon>();
+        if(pokemons.Length < limite)
+        {
+            
+                for (int i = 0; i < quantidade; i++)
+                {
+                    Vector3 pokemonPosicao = new Vector3(Random.Range(-7f, 7f), Random.Range(-4f, 4f), 0f);
+                    Instantiate(pokemon, pokemonPosicao, Quaternion.identity);
+                }
+            
+        }
+       
+    }
+    
+    void Start()
+    {
+        InvokeRepeating("chocaPokemon", 0.0f, 2.0f);
+    }
 
     private void Update()
     {
@@ -30,6 +58,7 @@ public class Criador : MonoBehaviour
 
         if(TempoRestante < -5)
         {
+            PlayerPrefs.SetInt("PontosAtual", PontosJogador);
             SceneManager.LoadScene("CenaFim");
 
         }else if(TempoRestante < 0)
@@ -37,9 +66,13 @@ public class Criador : MonoBehaviour
             contador.text = "Tempo\nEsgotado";
         }else if(TempoRestante < 10)
         {
+            limite = 10;
+            quantidade = 15;
             contador.color = Color.red;
         }else if(TempoRestante < 30)
         {
+            limite = 20;
+            quantidade = 10;
             contador.color = Color.yellow;
         }
     }

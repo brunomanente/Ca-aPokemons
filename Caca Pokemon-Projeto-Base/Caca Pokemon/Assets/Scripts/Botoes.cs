@@ -96,7 +96,7 @@ public class Botoes : MonoBehaviour
         SceneManager.LoadScene("CenaJogo");
     }
 
-    // Start is called before the first frame update
+   
     
 
     // Update is called once per frame

@@ -8,8 +8,11 @@ public class pokemon : MonoBehaviour
 
     private SpriteRenderer sr;
 
+    private Criador criador;
+
     public void OnMouseDown()
     {
+        criador.AumentaPontos();
         Destroy(gameObject);
     }
 
@@ -18,6 +21,8 @@ public class pokemon : MonoBehaviour
     {
         sr = GetComponent<SpriteRenderer>();
         sr.sprite = Modelos[Random.RandomRange(0, Modelos.GetLength(0))];
+        criador = FindObjectOfType<Criador>();
+
         
     }
 
